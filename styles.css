@@ -80,7 +80,8 @@ body {
 .btn-container {
   position: relative;
 }
-.error {
+.error,
+.wrong-answer {
   position: absolute;
   bottom: -50px;
   left: 50%;

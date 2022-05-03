@@ -43,29 +43,22 @@ const app = () => {
   const submitBtn = document.querySelector(".submit-btn");
   const answers = document.querySelectorAll(".answer");
   const error = document.querySelector(".error");
-  // Get elements from HTML end
+  const wrongAnswer = document.querySelector(".wrong-answer");
 
   let currentQuiz = 0;
   let selectedAnswer = null;
 
-  console.log(`selected answer : ${selectedAnswer}`);
-
-  // Start Quiz
+  // Update Quiz with correct data
   const loadQuiz = () => {
-    // Update Questionnaire Data start
     image.src = quizData[currentQuiz].img;
     question.innerText = quizData[currentQuiz].question;
     answerA.textContent = quizData[currentQuiz].a;
     answerB.textContent = quizData[currentQuiz].b;
     answerC.textContent = quizData[currentQuiz].c;
     answerD.textContent = quizData[currentQuiz].d;
-    // Update Questionnaire Data end
-
-    // Button Click end
-    console.log(`current quiz: ${currentQuiz}`, quizData.length);
   };
 
-  // Add click event listeners to each answer start
+  // Add click event listeners to each answer
   answers.forEach((answer) => {
     answer.addEventListener("click", () => {
       // Remove active class from each answer
@@ -75,26 +68,41 @@ const app = () => {
       });
       // Add active class to clicked answer
       answer.classList.add("active");
+      // Set selectedAnswer as clicked answer
       selectedAnswer = answer;
+
+      // Remove error messages
       if (error.classList.contains("error-active")) {
         error.classList.remove("error-active");
+      } else if (wrongAnswer.classList.contains("error-active")) {
+        wrongAnswer.classList.remove("error-active");
       }
     });
   });
-  // Add click event listeners to each answer end
 
-  // Button Click start
+  // Handle button click
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
+    // Show error message if no answer is chosen
     if (!selectedAnswer) {
       error.classList.add("error-active");
-      console.log("Ran");
     }
+
+    // Add wrong answer message if wrong answer is selected
+    if (
+      selectedAnswer &&
+      selectedAnswer.dataset.answer !== quizData[currentQuiz].correct
+    ) {
+      wrongAnswer.classList.add("error-active");
+    }
+
+    // Move on to next question if question is answered correctly
     if (
       selectedAnswer &&
       selectedAnswer.dataset.answer === quizData[currentQuiz].correct
     ) {
+      // Check if there's a next question to move on to
       if (currentQuiz < quizData.length - 1) {
         currentQuiz++;
       } else {
@@ -102,11 +110,11 @@ const app = () => {
       }
       selectedAnswer.classList.remove("active");
       selectedAnswer = null;
-      console.log(selectedAnswer, "clicked");
       loadQuiz();
     }
   });
 
+  // Start quiz
   loadQuiz();
 };
 app();
