@@ -56,6 +56,11 @@ const app = () => {
     answerB.textContent = quizData[currentQuiz].b;
     answerC.textContent = quizData[currentQuiz].c;
     answerD.textContent = quizData[currentQuiz].d;
+
+    answerA.classList.add("answer-start");
+    answerB.classList.add("answer-start");
+    answerC.classList.add("answer-start");
+    answerD.classList.add("answer-start");
   };
 
   // Add click event listeners to each answer
@@ -105,12 +110,18 @@ const app = () => {
       // Check if there's a next question to move on to
       if (currentQuiz < quizData.length - 1) {
         currentQuiz++;
+        answerA.classList.remove("answer-start");
+        answerB.classList.remove("answer-start");
+        answerC.classList.remove("answer-start");
+        answerD.classList.remove("answer-start");
       } else {
         currentQuiz = 0;
       }
       selectedAnswer.classList.remove("active");
       selectedAnswer = null;
-      loadQuiz();
+      setTimeout(() => {
+        loadQuiz();
+      }, 410);
     }
   });
 
