@@ -42,6 +42,9 @@ const app = () => {
   const answerD = document.getElementById("d-btn");
   const submitBtn = document.querySelector(".submit-btn");
   const answers = document.querySelectorAll(".answer");
+  const modal = document.querySelector(".modal");
+  const modalBtn = document.querySelector(".modal-btn");
+  const tint = document.querySelector(".tint");
   const error = document.querySelector(".error");
   const wrongAnswer = document.querySelector(".wrong-answer");
 
@@ -85,7 +88,7 @@ const app = () => {
     });
   });
 
-  // Handle button click
+  // Handle form button click
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -109,20 +112,29 @@ const app = () => {
     ) {
       // Check if there's a next question to move on to
       if (currentQuiz < quizData.length - 1) {
-        currentQuiz++;
         answerA.classList.remove("answer-start");
         answerB.classList.remove("answer-start");
         answerC.classList.remove("answer-start");
         answerD.classList.remove("answer-start");
+        currentQuiz++;
       } else {
-        currentQuiz = 0;
+        modal.classList.add("modal-active");
+        tint.classList.add("tint-active");
       }
-      selectedAnswer.classList.remove("active");
-      selectedAnswer = null;
       setTimeout(() => {
         loadQuiz();
-      }, 410);
+        selectedAnswer.classList.remove("active");
+        selectedAnswer = null;
+      }, 250);
     }
+  });
+
+  // Handle modal button click
+  modalBtn.addEventListener("click", () => {
+    modal.classList.remove("modal-active");
+    tint.classList.remove("tint-active");
+    currentQuiz = 0;
+    loadQuiz();
   });
 
   // Start quiz
