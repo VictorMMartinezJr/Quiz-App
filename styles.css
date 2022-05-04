@@ -14,7 +14,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to top, #457fca, #5691c8);
+  background: linear-gradient(to right, #457fca, #5691c8);
   font-family: "Poppins", sans-serif;
   position: relative;
 }
@@ -59,7 +59,7 @@ body {
 }
 .answer-start {
   opacity: 1;
-  transition: all 0.1s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 .answer-2 {
   transition-delay: 0.1s;
